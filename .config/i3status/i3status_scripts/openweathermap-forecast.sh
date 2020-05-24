@@ -102,6 +102,6 @@ if [ -n "$current" ] && [ -n "$forecast" ]; then
 	
 fi
 
-sleep 200
+sleep 400
 
 $HOME/.config/i3status/i3status_scripts/openweathermap-forecast.sh 
