@@ -24,21 +24,20 @@ order += "cpu_temperature 0"
 order += "cpu_usage"
 order += "disk /"
 #order += "disk /home"
-order += "ethernet enp1s0"
-order += "wireless wlp2s0"
+#order += "ethernet enp1s0"
+#order += "wireless wlp2s0"
 #order += "volume master"
 #order += "battery 0"
 
 tztime local {
         align = "center"
-#		format = "%time"
-		format = "<span foreground='#d863bb'> %time </span>"
-		format_time = " %a %-d %b %H:%M"
+		format = "%time"
+		format_time = "%a %-d %b %H:%M"
 		separator_block_width = 300
 }
 
 load {
-        format = "   %5min Load "
+        format = "   %5min Load "
 }
 
 cpu_temperature 0 {
@@ -46,30 +45,26 @@ cpu_temperature 0 {
         path = "/sys/class/thermal/thermal_zone0/temp"
 }
 cpu_usage {
-#	format = "  %usage "
-format = "<span foreground='#0db7ed'>  %usage  </span>"
+	format = "  %usage "
 }
 
 disk "/" {
-#        format = "  %used / %free  "
-format = "<span foreground='#43a047'>  %free  </span>"
+        format = "  %used / %free  "
 }
 
 #disk "/home" {
 #        format = "<span foreground='#a1d569'>  %free Free </span>"
 #}
 
-ethernet enp1s0 {
-       format_up = "  %ip "
-format_up = "<span foreground='#88c0d0'>  %ip </span>"
-        format_down = ""
-}
-
-wireless wlp2s0 {
-        format_up = " %quality "
-format_up = "<span foreground='#b48ead'> %quality </span>"
-       format_down = " "
-}
+#ethernet enp1s0 {
+#        format_up = "  %ip "
+#        format_down = "  Disconnected "
+#}
+#
+#wireless wlp2s0 {
+#        format_up = " %quality "
+#        format_down = " Disconnected "
+#}
 
 #volume master {
 #        format = "%volume"

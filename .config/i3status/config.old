@@ -1,15 +1,6 @@
-# i3status configuration file.
-# see "man i3status" for documentation.
-
-# It is important that this file is edited as UTF-8.
-# The following line should contain a sharp s:
-# ß
-# If the above line is not correctly displayed, fix your editor first!
-
 general {
-        
         output_format = "i3bar"
-        separator = "  "
+         separator = "  "
         colors = true
         markup = pango
         interval = 5
@@ -29,30 +20,23 @@ order += "wireless wlp2s0"
 #order += "volume master"
 #order += "battery 0"
 
-tztime local {
-        align = "center"
-#		format = "%time"
-		format = "<span foreground='#d863bb'> %time </span>"
-		format_time = " %a %-d %b %H:%M"
-		separator_block_width = 300
-}
+
 
 load {
-        format = "   %5min Load "
+        format = "<span foreground='#f59335'>   %5min Load </span>"
 }
 
 cpu_temperature 0 {
-        format = "  %degrees °C "
+        format = "<span foreground='#FF4500'>  %degrees °C </span>"
         path = "/sys/class/thermal/thermal_zone0/temp"
 }
 cpu_usage {
-#	format = "  %usage "
-format = "<span foreground='#0db7ed'>  %usage  </span>"
+	format = "<span foreground='#0db7ed'>  %usage  </span>"
 }
 
 disk "/" {
-#        format = "  %used / %free  "
-format = "<span foreground='#43a047'>  %free  </span>"
+#        format = "<span foreground='#EEE8AA'>  %used / %free  </span>"
+		 format = "<span foreground='#EEE8AA'>  %free  </span>"
 }
 
 #disk "/home" {
@@ -60,20 +44,18 @@ format = "<span foreground='#43a047'>  %free  </span>"
 #}
 
 ethernet enp1s0 {
-       format_up = "  %ip "
-format_up = "<span foreground='#88c0d0'>  %ip </span>"
-        format_down = ""
+        format_up = "<span foreground='#88c0d0'>  %ip </span>"
+        format_down = "<span foreground='#a0a0a0'>  Disconnected </span>"
 }
 
 wireless wlp2s0 {
-        format_up = " %quality "
-format_up = "<span foreground='#b48ead'> %quality </span>"
-       format_down = " "
+        format_up = "<span foreground='#b48ead'> %quality </span>"
+        format_down = "<span background='#a0a0a0'> Disconnected </span>"
 }
 
 #volume master {
-#        format = "%volume"
-#        format_muted = " Muted "
+#        format = "<span foreground='#ebcb8b'> %volume </span>"
+#        format_muted = "<span foreground='#a0a0a0'>  Muted </span>"
 #        device = "default"
 #        mixer = "Master"
 #        mixer_idx = 0
@@ -81,7 +63,7 @@ format_up = "<span foreground='#b48ead'> %quality </span>"
 
 #battery 0 {
 #	last_full_capacity = true
-#        format = "%status %percentage"
+#        format = "<span foreground='#a3be8c'> %status %percentage </span>"
 #        format_down = "No Battery"
 #        status_chr = "⚡  CHR"
 #        status_bat = "🔋  BAT"
@@ -91,4 +73,7 @@ format_up = "<span foreground='#b48ead'> %quality </span>"
 #        low_threshold = 10
 #}
 
-
+tztime local {
+		format = "<span foreground='#81a1c1'> %time </span>"
+		format_time = "%a %-d %b %H:%M"
+}
