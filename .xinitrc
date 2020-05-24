@@ -1,13 +1,18 @@
+#!/bin/sh
 
-# . /etc/X11/Xsession
+# /etc/X11/xinit/xinitrc
+#
+# global xinitrc file, used by all X sessions started by xinit (startx)
+#invoke global X session script
+. /etc/X11/Xsession &
 
-#$HOME/.config/i3status/i3status_scripts/calendar & 
-#$HOME/.config/i3status/i3status_scripts/power_menu &
-sleep 1 && $HOME/.config/i3status/i3status_scripts/openweatherrun &
+pnmixer && sleep 1 &
+cbatticon && sleep 1 &
+$HOME/.config/i3status/i3status_scripts/openweatherrun && sleep 1 &
 sleep 6 && $HOME/.config/i3status/i3status_scripts/calendar &
 sleep 10 && $HOME/.config/i3status/i3status_scripts/power_menu &
 
-systemctl --user set-environment DISPLAY=:0
+#systemctl --user set-environment DISPLAY=:0
 
 # Aqui o i3 é mantido como padrão
 session=${1:-i3}
