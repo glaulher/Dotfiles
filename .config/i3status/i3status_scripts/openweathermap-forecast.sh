@@ -95,7 +95,7 @@ if [ -n "$current" ] && [ -n "$forecast" ]; then
 	NOTIFY="$(get_icon "$current_icon") $current_temp$SYMBOL $current_desc"
 	NOTIFYEND="$trend  $(get_icon "$forecast_icon") $forecast_temp$SYMBOL"
 	MESSAGE="$(get_icon "$current_icon") $current_temp$SYMBOL $current_desc  $trend  $(get_icon "$forecast_icon") $forecast_temp$SYMBOL"
-	notify-send "Openweathermap" "$NOTIFY $NOTIFYEND"
+	notify-send --icon=$(get_png "$forecast_icon") "Openweathermap" "$NOTIFY $NOTIFYEND"
 	echo tooltip:$MESSAGE 
 	echo icon:$(get_png "$forecast_icon")
 	# $'\n'	for broken line notify-send
