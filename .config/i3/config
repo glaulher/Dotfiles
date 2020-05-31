@@ -347,7 +347,7 @@ exec --no-startup-id lxpolkit &
 bar {
 	  position          top
       font pango:Noto Sans 9
-      i3bar_command   i3bar
+      i3bar_command   i3bar 
       
       
        colors {
@@ -362,8 +362,9 @@ bar {
     urgent_workspace   #FF5555 #FF5555 #F8F8F2
     binding_mode       #FF5555 #FF5555 #F8F8F2
     }
-        status_command i3status
-#		status_command ~/.config/i3status/nome_janela_i3
+		status_command py3status
+#        status_command i3status
+#		status_command ~/.config/i3status/keylock
 #		status_command i3status -c ~/.config/i3status/config_color 
 }
 
@@ -392,3 +393,15 @@ for_window [class=Terminator|Xfburn|GParted|System-config-printer.py|Lxtask|Pavu
 
 bindsym control+$mod+c exec --no-startup-id ~/.config/scripts/popup-calendar.sh --popup;focus
 bindsym --whole-window control+$mod+button1 exec --no-startup-id ~/.config/scripts/popup-calendar.sh --popup;focus
+
+# Enable/disable caps mode
+#mode "CapsLK" {
+#        bindsym Caps_Lock mode "default"
+#}
+#bindsym Caps_Lock mode "CapsLK"
+
+# Enable/disable numeric keyboard 
+#mode "num" {
+#        bindsym Num_Lock mode "default"
+#}
+#bindsym Num_Lock mode "num"

@@ -15,8 +15,8 @@ fi
 systemctl --user set-environment DISPLAY=:0
 
 sleep 1 && $HOME/.config/i3status/i3status_scripts/openweatherrun &
-sleep 2 && $HOME/.config/i3status/i3status_scripts/calendar &
-sleep 4 && pnmixer &
+#sleep 2 && $HOME/.config/i3status/i3status_scripts/calendar &
+#sleep 4 && pnmixer &
 sleep 6 && cbatticon &
 sleep 10 && $HOME/.config/i3status/i3status_scripts/power_menu &
 
