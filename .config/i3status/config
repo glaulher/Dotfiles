@@ -19,15 +19,18 @@ general {
 }
 
 order += "tztime local"
+order += "tztime holder__keylock"
 order += "load"
 order += "cpu_temperature 0"
 order += "cpu_usage"
+#order += "memory"
 order += "disk /"
 #order += "disk /home"
 order += "ethernet enp1s0"
 order += "wireless wlp2s0"
 #order += "volume master"
 #order += "battery 0"
+
 
 tztime local {
         align = "center"
@@ -36,6 +39,10 @@ tztime local {
 		format_time = " %a %-d %b %H:%M"
 		separator_block_width = 300
 }
+
+tztime holder__keylock {
+        format = ""        
+ }
 
 load {
         format = "   %5min Load "
@@ -46,9 +53,15 @@ cpu_temperature 0 {
         path = "/sys/class/thermal/thermal_zone0/temp"
 }
 cpu_usage {
-#	format = "  %usage "
-format = "<span foreground='#0db7ed'>  %usage  </span>"
+#	format = "  %usage "
+format = "<span foreground='#0db7ed'>  %usage  </span>"
 }
+
+#memory {
+#format = ""<span foreground='#FEADB9'> %used </span>" 
+#threshold_degraded = "10%"
+#format_degraded = "MEMORY: %free"
+#}
 
 disk "/" {
 #        format = "  %used / %free  "

@@ -1,0 +1,149 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        
+        output_format = "i3bar"
+#       separator = "  "
+        colors = true
+        markup = pango
+        interval = 5
+        color_good = '#2f343f'
+		color_degraded = '#ebcb8b'
+		color_bad = '#ba5e57'
+}
+py3status {
+
+}
+
+order += "window"
+
+order += "keyboard_locks"
+order += "backlight"
+
+order += "load"
+order += "cpu_temperature 0"
+order += "cpu_usage"
+#order += "memory"
+order += "conky memory"
+order += "disk /"
+#order += "disk /home"
+order += "volume master"
+order += "ethernet enp1s0"
+order += "wireless wlp2s0"
+
+#order += "battery 0"
+order += "time"
+
+# show alternative instead of empty title
+window {
+    color = '#ededed'
+    format = '{title}'
+    separator_block_width = 100
+}
+
+
+
+
+
+# hide NUM, CAPS, SCR
+keyboard_locks {
+    background= "#ff5555" 
+    format = "[\?if=caps_lock CapsLock][\?soft  ][\?if=scroll_lock SCR]"
+}
+
+
+backlight {
+	device = "intel_backlight"
+	format = " {level}%"
+	color = "#ff5252"
+	on_click 1 = "exec xbacklight -inc 10 && ~/.config/scripts/controlbright.sh --popup" 
+	on_click 3 = "exec xbacklight -dec 10 && ~/.config/scripts/controlbright.sh --popup" 
+}
+
+load {
+        format = "   %5min Load "
+}
+
+cpu_temperature 0 {
+        format = "  %degrees °C "
+        path = "/sys/class/thermal/thermal_zone0/temp"
+}
+cpu_usage {
+#	format = "  %usage "
+color='#8589c8'
+format = "  %usage" 
+}
+
+#memory {
+#format = ""<span foreground='#FEADB9'> %used </span>" 
+#threshold_degraded = "10%"
+#format_degraded = "MEMORY: %free"
+#}
+
+# display memory, memperc, membar + thresholds
+
+conky memory {
+#    format = ' [\?color=#40718c   {mem}/{memmax}] '
+     format = ' [\?color=#40718c   {mem}] '
+    
+    
+}
+
+disk "/" {
+#        format = "  %used / %free  "
+color='#8e5ebc'
+format = " %free"
+}
+
+#disk "/home" {
+#        format = "<span foreground='#a1d569'>  %free Free </span>"
+#}
+
+volume master {
+        format = "<span foreground='#bd93f9'>%volume </span>"
+        format_muted = "<span foreground='#a0a0a0'> Muted </span>"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+        on_click 1 = "exec pactl set-sink-mute 0  toggle &&  notify-send 'volume muted'"               
+}
+
+ethernet enp1s0 {      
+format_up = "<span foreground='#88c0d0'>  %ip </span>"
+format_down = "" 
+}
+
+wireless wlp2s0 {
+format_up = "<span foreground='#71d385'> %quality </span>"
+format_down = " "
+}
+
+
+
+
+#battery 0 {
+#	last_full_capacity = true
+#        format = "%status %percentage"
+#        format_down = "No Battery"
+#        status_chr = "⚡  CHR"
+#        status_bat = "🔋  BAT"
+#        status_unk = "? "
+#        status_full = "☻  FULL"
+#        path = "/sys/class/power_supply/BAT%d/uevent"
+#        low_threshold = 10
+#}
+
+time {
+		
+		color='#d863bb'
+#		format = " %a %-d %b   %H:%M"
+		format = " %a %-d %b %H:%M"	
+		on_click 1 = "exec $HOME/.config/scripts/popup-calendar.sh --popup"
+	    on_click 3 = "exec $HOME/.config/scripts/popup-calendar.sh --popup" 
+}
