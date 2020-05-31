@@ -1,9 +1,7 @@
 # i3status configuration file.
 # see "man i3status" for documentation.
-
 # It is important that this file is edited as UTF-8.
 # The following line should contain a sharp s:
-# ß
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
@@ -22,21 +20,17 @@ py3status {
 }
 
 order += "window"
-
 order += "keyboard_locks"
 order += "backlight"
-
 order += "load"
 order += "cpu_temperature 0"
 order += "cpu_usage"
-#order += "memory"
 order += "conky memory"
 order += "disk /"
 #order += "disk /home"
 order += "volume master"
 order += "ethernet enp1s0"
 order += "wireless wlp2s0"
-
 #order += "battery 0"
 order += "time"
 
@@ -47,16 +41,11 @@ window {
     separator_block_width = 100
 }
 
-
-
-
-
 # hide NUM, CAPS, SCR
 keyboard_locks {
     background= "#ff5555" 
     format = "[\?if=caps_lock CapsLock][\?soft  ][\?if=scroll_lock SCR]"
 }
-
 
 backlight {
 	device = "intel_backlight"
@@ -75,24 +64,14 @@ cpu_temperature 0 {
         path = "/sys/class/thermal/thermal_zone0/temp"
 }
 cpu_usage {
-#	format = "  %usage "
 color='#8589c8'
 format = "  %usage" 
 }
 
-#memory {
-#format = ""<span foreground='#FEADB9'> %used </span>" 
-#threshold_degraded = "10%"
-#format_degraded = "MEMORY: %free"
-#}
-
 # display memory, memperc, membar + thresholds
-
 conky memory {
 #    format = ' [\?color=#40718c   {mem}/{memmax}] '
-     format = ' [\?color=#40718c   {mem}] '
-    
-    
+     format = ' [\?color=#40718c   {mem}] ' 
 }
 
 disk "/" {
@@ -111,7 +90,7 @@ volume master {
         device = "default"
         mixer = "Master"
         mixer_idx = 0
-        on_click 1 = "exec pactl set-sink-mute 0  toggle &&  notify-send 'volume muted'"               
+        on_click 1 = "exec pactl set-sink-mute 0  toggle &&  notify-send 'volume muted/on'"               
 }
 
 ethernet enp1s0 {      
@@ -123,9 +102,6 @@ wireless wlp2s0 {
 format_up = "<span foreground='#71d385'> %quality </span>"
 format_down = " "
 }
-
-
-
 
 #battery 0 {
 #	last_full_capacity = true
