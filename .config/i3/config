@@ -9,12 +9,18 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+###############
+# Modify key  #              
+###############
 set $mod Mod4
 set $alt Mod1
 
+###############
+#   Font      #             
+###############
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Noto Sans 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -27,15 +33,28 @@ font pango:Noto Sans 8
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
+font pango:Noto Sans 8
+
+############
+# Mouse    #              
+############
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Return exec terminator
-bindsym $alt+Return exec terminator
-# kill focused window
-bindsym $mod+q kill
-bindsym $alt+q kill
+# The right button over a titlebar kills the window
+bindsym --release button3 kill
+
+# The right button and a modifer over any part of the window kills the window
+bindsym --whole-window $mod+button3 kill
+bindsym --whole-window $alt+button3 kill
+
+#exec dmenu with button 2
+bindsym --whole-window button2 exec dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' 
+
+#########################
+# keyboard shortcuts    #              
+#########################
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2'  
@@ -44,6 +63,13 @@ bindsym $alt+d exec dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# start a terminal
+bindsym $mod+Return exec terminator
+bindsym $alt+Return exec terminator
+# kill focused window
+bindsym $mod+q kill
+bindsym $alt+q kill
 
 # change focus
 bindsym $mod+j focus left
@@ -56,7 +82,6 @@ bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-
 
 # move focused window
 bindsym $mod+Shift+j move left
@@ -77,21 +102,16 @@ bindsym $mod+h split h
 # split in vertical orientation
 bindsym $mod+v split v
 
-
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
-
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-
-
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -102,39 +122,44 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-# switch to workspace
-bindsym $mod+1 workspace number "1: >_"
-bindsym $mod+2 workspace number "2: "
-bindsym $mod+3 workspace number "3: "
-bindsym $mod+4 workspace number "4: "
-bindsym $mod+5 workspace number "5: "
-bindsym $mod+6 workspace number "6: "
-bindsym $mod+7 workspace number "7: "
-bindsym $mod+8 workspace number "8: "
-bindsym $mod+9 workspace number "9: "
-bindsym $mod+0 workspace number "0: "
-
-
-
-# move focused container to workspace
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number "1: >_"; workspace number "1: >_"
-bindsym $mod+Shift+2 move container to workspace number "2: "; workspace number "2: "
-bindsym $mod+Shift+3 move container to workspace number "3: "; workspace number "3: "
-bindsym $mod+Shift+4 move container to workspace number "4: "; workspace number "4: "
-bindsym $mod+Shift+5 move container to workspace number "5: "; workspace number "5: "
-bindsym $mod+Shift+6 move container to workspace number "6: "; workspace number "6: "
-bindsym $mod+Shift+7 move container to workspace number "7: "; workspace number "7: "
-bindsym $mod+Shift+8 move container to workspace number "8: "; workspace number "8: "
-bindsym $mod+Shift+9 move container to workspace number "9: "; workspace number "9: "
-bindsym $mod+Shift+0 move container to workspace number "0: "; workspace number "0: "
-
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# Keybinding for Volume management 
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +10%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -10%
+bindsym XF86AudioMute exec pactl set-sink-mute 0  toggle
+# End Keybinding for Volume management
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+#bindsym XF86MonBrightnessUp exec xbacklight -inc 10 && notify-send --expire-time=50 "LCD Backlight $(printf %.0f%% $(xbacklight -get))
+#bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'Brightness up'" 
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; ~/.config/scripts/controlbright.sh --popup"
+bindsym XF86MonBrightnessDown exec " xbacklight -dec 10; ~/.config/scripts/controlbright.sh --popup"
+
+bindsym $mod+b bar hidden_state toggle
+bindsym $alt+b bar hidden_state toggle
+ 
+bindsym Print exec xfce4-screenshooter
+
+#bindsym $mod+f2 exec rifle "$(find -type f | fzf -e --reverse --prompt="Enter string > " --header="ESC to quit. ")"
+
+# Rofi
+bindsym $mod+m exec /home/glaulher/.config/scripts/scriptrofi.sh
+#bindsym $mod+m exec xfce4-appfinder
+bindsym $alt+ctrl+t exec xterm
+#bindsym $mod+n exec wicd-client -n
+
+bindsym $mod+g exec google-chrome
+bindsym $mod+c exec chromium
+
+bindsym control+$mod+c exec --no-startup-id ~/.config/scripts/popup-calendar.sh --popup;focus
+bindsym --whole-window control+$mod+button1 exec --no-startup-id ~/.config/scripts/popup-calendar.sh --popup;focus
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -159,45 +184,41 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
-# Keybinding for Volume management 
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +10%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -10%
-bindsym XF86AudioMute exec pactl set-sink-mute 0  toggle
-# End Keybinding for Volume management
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-
-#bindsym XF86MonBrightnessUp exec xbacklight -inc 10 && notify-send --expire-time=50 "LCD Backlight $(printf %.0f%% $(xbacklight -get))
-#bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'Brightness up'" 
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; ~/.config/scripts/controlbright.sh --popup"
-bindsym XF86MonBrightnessDown exec " xbacklight -dec 10; ~/.config/scripts/controlbright.sh --popup"
  
 bindsym $mod+r mode "resize"
 
-bindsym $mod+b bar hidden_state toggle
-bindsym $alt+b bar hidden_state toggle
- 
-bindsym Print exec xfce4-screenshooter
-# The right button over a titlebar kills the window
-bindsym --release button3 kill
+#############
+# Workspace #
+#############
 
-# The right button and a modifer over any part of the window kills the window
-bindsym --whole-window $mod+button3 kill
-bindsym --whole-window $alt+button3 kill
+# switch to workspace
+bindsym $mod+1 workspace number "1: >_"
+bindsym $mod+2 workspace number "2: "
+bindsym $mod+3 workspace number "3: "
+bindsym $mod+4 workspace number "4: "
+bindsym $mod+5 workspace number "5: "
+bindsym $mod+6 workspace number "6: "
+bindsym $mod+7 workspace number "7: "
+bindsym $mod+8 workspace number "8: "
+bindsym $mod+9 workspace number "9: "
+bindsym $mod+0 workspace number "0: "
 
-bindsym --whole-window button2 exec dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' 
+# move focused container to workspace
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number "1: >_"; workspace number "1: >_"
+bindsym $mod+Shift+2 move container to workspace number "2: "; workspace number "2: "
+bindsym $mod+Shift+3 move container to workspace number "3: "; workspace number "3: "
+bindsym $mod+Shift+4 move container to workspace number "4: "; workspace number "4: "
+bindsym $mod+Shift+5 move container to workspace number "5: "; workspace number "5: "
+bindsym $mod+Shift+6 move container to workspace number "6: "; workspace number "6: "
+bindsym $mod+Shift+7 move container to workspace number "7: "; workspace number "7: "
+bindsym $mod+Shift+8 move container to workspace number "8: "; workspace number "8: "
+bindsym $mod+Shift+9 move container to workspace number "9: "; workspace number "9: "
+bindsym $mod+Shift+0 move container to workspace number "0: "; workspace number "0: "
 
-#bindsym $mod+f2 exec rifle "$(find -type f | fzf -e --reverse --prompt="Enter string > " --header="ESC to quit. ")"
-
-# Rofi
-bindsym $mod+m exec /home/glaulher/.config/scripts/scriptrofi.sh
-#bindsym $mod+m exec xfce4-appfinder
-bindsym $alt+ctrl+t exec xterm
-#bindsym $mod+n exec wicd-client -n
-
-bindsym $mod+g exec google-chrome
-bindsym $mod+c exec chromium
+####################
+# Window floating  #
+####################
 
 # Open specific applications in floating mode
 # Definir tipo padrão das bordas dos aplicativos
@@ -233,6 +254,9 @@ for_window [class="Yad" title="yad-brilho"] floating enable
 for_window [class="Xfce4-appfinder"] floating enable
 for_window [class="Wicd-client"] floating enable
 
+################
+# Auto start   #
+################
 
 #exec --no-startup-id polybar -r mybar 
 exec --no-startup-id $HOME/.config/scripts/wallpapers.sh
@@ -252,98 +276,6 @@ exec --no-startup-id lxpolkit &
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 
-
-#bar {
-     
-#     i3bar_command     i3bar  
-#     status_command    i3blocks -c ~/.config/i3blocks/smallconfig
-#     position          top
-#     workspace_buttons yes
-#     tray_output none
-#   font pango: Noto Sans, fontawesome 8
-#	colors {
-#         background #2f343f
-#        statusline #2f343f
-#         separator #2f343f
-
-#		 colour of border, background, and text
-#         focused_workspace       #2f343f #bf616a #d8dee8
-#         active_workspace        #2f343f #2f343f #d8dee8
-#         inactive_workspace      #2f343f #2f343f #d8dee8
-#         urgent_workspace        #2f343f #ebcb8b #2f343f
-#    }
-   
-#}
-
-#bar {
-#	mode hide
-#    hidden_state hide
-#    modifier $alt
-#    i3bar_command     i3bar  
-#    status_command    i3blocks -c ~/.config/i3blocks/config
-#    position          bottom
-#    workspace_buttons no
-#    tray_output none
-    
-#	colors {
-#       background #2f343f
-#        statusline #2f343f
-#        separator #2f343f
-
-#		 colour of border, background, and text
-#        focused_workspace       #2f343f #bf616a #d8dee8
-#        active_workspace        #2f343f #2f343f #d8dee8
-#        inactive_workspace      #2f343f #2f343f #d8dee8
-#        urgent_workspace        #2f343f #ebcb8b #2f343f
-#   }
-#}
-
-
-#bar{
-#	status_command ~/.config/i3status/nome_janela_i3
-#        mode hide
-#        hidden_state hide
-#       modifier Mod4
-#       workspace_buttons no 
-#         position          top
-#         i3bar_command     i3bar
-#        status_command i3status 
-#        
-#        colors {
-#        background #2f343f
-#        statusline #2f343f
-#        separator #4b5262
-#		separator  #2f343f
-#		 colour of border, background, and text
-#        focused_workspace       #2f343f #bf616a #d8dee8
-#        active_workspace        #2f343f #2f343f #d8dee8
-#        inactive_workspace      #2f343f #2f343f #d8dee8
-#        urgent_workspace        #2f343f #ebcb8b #2f343f
-#   }    
-#}
-
-#bar{
-#        mode hide
-#        hidden_state hide
-#        modifier Mod4
-#        workspace_buttons no 
-#         position          top
-#         i3bar_command     i3bar
-        
-#        colors {
-#        background #282A36
-#        statusline  background #282A36
-#        #separator #4b5262
-#		separator  #2f343f
-#		 colour of border, background, and text
-#         focused_workspace  #44475A #44475A #F8F8F2
-#    active_workspace   #282A36 #44475A #F8F8F2
-#    inactive_workspace #282A36 #282A36 #BFBFBF
-#    urgent_workspace   #FF5555 #FF5555 #F8F8F2
-#    binding_mode       #FF5555 #FF5555 #F8F8F2
-#    }
-#   status_command i3status 
-#}
 bar {
 	  position          top
       font pango:Noto Sans 9
@@ -382,17 +314,16 @@ client.background       #F8F8F2
 
 assign [class=Xfce4-terminal|Terminator] "1: >_"
 assign [class=Firefox|Google-chrome-stable|Google-chrome|Chromium] "2: "
-assign [class=Thunar|Pcmanfm] "3: "
+assign [class=Thunar|Pcmanfm|pcmanfm-qt] "3: "
 assign [class=Geany|Code|Evince|Gucharmap|Soffice|libreoffice*] "4: "
 assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape|Transmission-gtk] "5: "
 assign [class=Xfce4-appfinder|Lxappearance|System-config-printer.py|Lxtask|GParted|Pavucontrol|Exo-helper*|Lxrandr|Arandr] "6: "
 assign [class=Gimp*|Inkscape] "7: "
 for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol|Xarchiver] floating enable
-for_window [class=Lxterminal|Pcmanfm|Thunar|Firefox|Geany|Code|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity|Chromium] focus
+for_window [class=Lxterminal|pcmanfm-qt|Pcmanfm|Thunar|Firefox|Geany|Code|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity|Chromium] focus
 for_window [class=Terminator|Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|Arandr|Xfce4-appfinder|Google-chrome|Transmission-gtk|Xarchiver] focus
 
-bindsym control+$mod+c exec --no-startup-id ~/.config/scripts/popup-calendar.sh --popup;focus
-bindsym --whole-window control+$mod+button1 exec --no-startup-id ~/.config/scripts/popup-calendar.sh --popup;focus
+
 
 # Enable/disable caps mode
 #mode "CapsLK" {
